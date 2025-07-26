@@ -9,10 +9,13 @@ data class Player(
     @PrimaryKey(autoGenerate = true)
     val id:Int?=null,
     @ColumnInfo(name = "name")
-    val name:String,
+    val name:String="",
     @ColumnInfo(name = "profile_picture")
-    val profilePicture:String,
+    val profilePicture: String="",
     @ColumnInfo("score")
-    val score:String,
-
+    val score:Int=0,
+    @ColumnInfo(name = "games-won")
+    val gamesWon:Int=0,
+    @ColumnInfo(name = "maximumScore")
+    val maximumScore:String=""
 )

@@ -7,6 +7,9 @@ import ro.gtechco.rummyscorekeeper.core.DataBases
 import ro.gtechco.rummyscorekeeper.data.data_source.PlayerDatabase
 import ro.gtechco.rummyscorekeeper.data.repository.PlayerRepositoryImpl
 import ro.gtechco.rummyscorekeeper.domain.repository.PlayerRepository
+import ro.gtechco.rummyscorekeeper.domain.use_cases.AddNewPlayer
+import ro.gtechco.rummyscorekeeper.domain.use_cases.MainScreenUseCases
+import ro.gtechco.rummyscorekeeper.domain.use_cases.SavePlayerEdit
 import ro.gtechco.rummyscorekeeper.presentation.MainScreenViewModel
 
 val module= module{
@@ -20,6 +23,16 @@ val module= module{
     }
     single<PlayerRepository>{ PlayerRepositoryImpl(dao = get()) }
 
-    viewModel { MainScreenViewModel(repository = get()) }
+    single {
+        MainScreenUseCases(
+            addNewPlayer = AddNewPlayer(repository = get()),
+            savePlayerEdit = SavePlayerEdit(repository = get())
+        )
+    }
+
+    viewModel { MainScreenViewModel(
+        repository = get(),
+        useCases = get()
+        ) }
 
 }

@@ -58,6 +58,10 @@ dependencies {
 //lottie
     implementation(libs.lottie.compose)
 
+    //icons
+    implementation (libs.androidx.material.icons.extended)
+
+
 
     implementation (libs.androidx.lifecycle.viewmodel.compose)
     implementation (libs.kotlinx.coroutines.core)

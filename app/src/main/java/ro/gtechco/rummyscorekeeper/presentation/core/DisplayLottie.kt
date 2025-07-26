@@ -22,7 +22,8 @@ fun DisplayLottie(
         isPlaying =true,
         iterations = LottieConstants.IterateForever
     )
-    Box (modifier = modifier){
-            LottieAnimation(composition = composition, progress = progress, modifier = modifier)
+    Box {
+        LottieAnimation(composition = composition, progress = progress, modifier = modifier)
     }
+
 }
