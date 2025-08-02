@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -23,6 +24,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,7 +37,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import ro.gtechco.rummyscorekeeper.R
 import ro.gtechco.rummyscorekeeper.domain.model.Player
 import ro.gtechco.rummyscorekeeper.presentation.core.DisplayLottie
@@ -67,19 +73,26 @@ fun PlayerItem(
             {
                 if (player.profilePicture.isNotEmpty())
                 {
-                    AsyncImage(
-                        model = player.profilePicture,
-                        contentDescription = stringResource(R.string.avatar_img_description),
-                        modifier = Modifier.size(64.dp)
-                            .clip(shape = CircleShape)
-                            .padding(start = 16.dp),
-                        contentScale = ContentScale.Crop
-                    )
+                    Row {
+                        Spacer(modifier = Modifier.width(12.dp))
+                        AsyncImage(
+                            model = player.profilePicture,
+                            contentDescription = stringResource(R.string.avatar_img_description),
+                            modifier = Modifier.size(64.dp)
+                                .clip(shape = CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
                 }
                 else {
-                    DisplayLottie(spec = LottieCompositionSpec.RawRes(R.raw.dog_avatar),
-                        modifier = Modifier.size(64.dp)
-                            .padding(start = 16.dp))
+                    val dogComposition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.dog_avatar))
+                    val progress by animateLottieCompositionAsState(
+                        composition = dogComposition,
+                        isPlaying = true,
+                        iterations = LottieConstants.IterateForever
+                    )
+                    LottieAnimation(composition = dogComposition, progress = progress, modifier = Modifier.size(64.dp). padding(start = 16.dp))
                 }
 
                 Text(
@@ -102,9 +115,14 @@ fun PlayerItem(
                 }
 
             }
-            DisplayLottie(
-                spec = LottieCompositionSpec.RawRes(R.raw.snail_loader),
-                modifier = Modifier.size(150.dp))
+            val snailComposition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.snail_loader))
+            val snailProgress by animateLottieCompositionAsState(
+                composition = snailComposition,
+                isPlaying = true,//todo
+                iterations = LottieConstants.IterateForever
+            )
+            LottieAnimation(composition = snailComposition, progress = snailProgress, modifier = Modifier.size(150.dp))
+
 
                 BadgedBox(badge = {
                     //todo
